@@ -4,8 +4,7 @@ import algorithm.helper.IndividualsHelper;
 import algorithm.model.Individual;
 import infrastructure.Helper;
 import infrastructure.IndividualGenerator;
-import network.SortingNetwork;
-import network.model.ComparatorSet;
+import network.model.Comparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,8 +13,8 @@ import java.util.Random;
 
 public class GeneticAlgorithm {
 
-    public Float MUTATION_PROBABILITY;
-    public Float CROSSOVER_PROBABILITY;
+    private Float MUTATION_PROBABILITY;
+    private Float CROSSOVER_PROBABILITY;
 
     private int sizeOfPopulation;
     private int numberOfInputs;
@@ -47,7 +46,7 @@ public class GeneticAlgorithm {
         return "";
     }
 
-    public void mutateIndividuals(){
+    private void mutateIndividuals(){
 
         for(int i = 0; i < this.sizeOfPopulation; i++){
             for(int j = 0; j < this.numberOfComparators; j++){
@@ -57,15 +56,15 @@ public class GeneticAlgorithm {
 
 
                         do{
-                            ComparatorSet comparatorSet = new ComparatorSet();
-                            comparatorSet.setX(new Random().nextInt(this.numberOfInputs - 1));
-                            Integer aux = new Random().nextInt(this.numberOfInputs - 1) + (comparatorSet.getX() + 1);
+                            Comparator comparator = new Comparator();
+                            comparator.setX(new Random().nextInt(this.numberOfInputs - 1));
+                            Integer aux = new Random().nextInt(this.numberOfInputs - 1) + (comparator.getX() + 1);
                             while(aux >= this.numberOfInputs){
-                                aux = new Random().nextInt(this.numberOfInputs - 1) + (comparatorSet.getX() + 1);
+                                aux = new Random().nextInt(this.numberOfInputs - 1) + (comparator.getX() + 1);
                             }
-                            comparatorSet.setY(aux);
-                            this.individuals.get(i).getSortingNetwork().getComparatorSets().get(j).setComparator(comparatorSet);
-                        }while(!Helper.checkAllComparatorsAreDifferent(this.individuals.get(i).getSortingNetwork().getComparatorSets(), j));
+                            comparator.setY(aux);
+                            this.individuals.get(i).getSortingNetwork().getComparators().get(j).setComparator(comparator);
+                        }while(!Helper.checkAllComparatorsAreDifferent(this.individuals.get(i).getSortingNetwork().getComparators(), j));
 
 
 
@@ -78,48 +77,48 @@ public class GeneticAlgorithm {
 
     public void crossOverIndividuals(){
 
-        List<List<ComparatorSet>> comparatorsGenerated = new ArrayList<List<ComparatorSet>>();
+        List<List<Comparator>> comparatorsGenerated = new ArrayList<List<Comparator>>();
 
         for(int i = 0; i < this.individuals.size() - 2; i++){
-            ComparatorSet comparatorSetAux = new ComparatorSet();
-            comparatorSetAux.setX(-1);
-            comparatorSetAux.setY(-1);
+            Comparator comparatorAux = new Comparator();
+            comparatorAux.setX(-1);
+            comparatorAux.setY(-1);
 
             List<Integer> parents = Helper.getPairNotEqualNumbers(this.sizeOfPopulation);
-            List<ComparatorSet> newListOfComparatorSets = new ArrayList<ComparatorSet>();
+            List<Comparator> newListOfComparators = new ArrayList<Comparator>();
 
             for(int j = 0; j < this.numberOfComparators; j++){
                 Float crossOverRandomChoice = (float)Math.random();
 
                 if(crossOverRandomChoice < this.CROSSOVER_PROBABILITY){
-                    if(comparatorSetAux.Equals(this.individuals.get(parents.get(0)).getSortingNetwork().getComparatorSets().get(j))){
-                        newListOfComparatorSets.add(this.individuals.get(parents.get(1)).getSortingNetwork().getComparatorSets().get(j));
-                        comparatorSetAux.setComparator(this.individuals.get(parents.get(1)).getSortingNetwork().getComparatorSets().get(j));
+                    if(comparatorAux.Equals(this.individuals.get(parents.get(0)).getSortingNetwork().getComparators().get(j))){
+                        newListOfComparators.add(this.individuals.get(parents.get(1)).getSortingNetwork().getComparators().get(j));
+                        comparatorAux.setComparator(this.individuals.get(parents.get(1)).getSortingNetwork().getComparators().get(j));
                     }else{
-                        newListOfComparatorSets.add(this.individuals.get(parents.get(0)).getSortingNetwork().getComparatorSets().get(j));
-                        comparatorSetAux.setComparator(this.individuals.get(parents.get(0)).getSortingNetwork().getComparatorSets().get(j));
+                        newListOfComparators.add(this.individuals.get(parents.get(0)).getSortingNetwork().getComparators().get(j));
+                        comparatorAux.setComparator(this.individuals.get(parents.get(0)).getSortingNetwork().getComparators().get(j));
                     }
                 }else{
-                    if(comparatorSetAux.Equals(this.individuals.get(parents.get(1)).getSortingNetwork().getComparatorSets().get(j))){
-                        newListOfComparatorSets.add(this.individuals.get(parents.get(0)).getSortingNetwork().getComparatorSets().get(j));
-                        comparatorSetAux.setComparator(this.individuals.get(parents.get(0)).getSortingNetwork().getComparatorSets().get(j));
+                    if(comparatorAux.Equals(this.individuals.get(parents.get(1)).getSortingNetwork().getComparators().get(j))){
+                        newListOfComparators.add(this.individuals.get(parents.get(0)).getSortingNetwork().getComparators().get(j));
+                        comparatorAux.setComparator(this.individuals.get(parents.get(0)).getSortingNetwork().getComparators().get(j));
                     }else{
-                        newListOfComparatorSets.add(this.individuals.get(parents.get(1)).getSortingNetwork().getComparatorSets().get(j));
-                        comparatorSetAux.setComparator(this.individuals.get(parents.get(1)).getSortingNetwork().getComparatorSets().get(j));
+                        newListOfComparators.add(this.individuals.get(parents.get(1)).getSortingNetwork().getComparators().get(j));
+                        comparatorAux.setComparator(this.individuals.get(parents.get(1)).getSortingNetwork().getComparators().get(j));
                     }
                 }
 
-                comparatorsGenerated.add(newListOfComparatorSets);
+                comparatorsGenerated.add(newListOfComparators);
             }
         }
 
         // Sorteaza individuals
         Collections.sort(this.individuals, (o1, o2) -> Float.compare(o2.getFitness(), o1.getFitness()));
 
-        comparatorsGenerated.add(this.individuals.get(0).getSortingNetwork().getComparatorSets());
-        comparatorsGenerated.add(this.individuals.get(1).getSortingNetwork().getComparatorSets());
+        comparatorsGenerated.add(this.individuals.get(0).getSortingNetwork().getComparators());
+        comparatorsGenerated.add(this.individuals.get(1).getSortingNetwork().getComparators());
         for(int i = 0; i < this.individuals.size() - 2; i++){
-            this.individuals.get(i).getSortingNetwork().setComparatorSets(comparatorsGenerated.get(i));
+            this.individuals.get(i).getSortingNetwork().setComparators(comparatorsGenerated.get(i));
         }
 
     }
@@ -173,14 +172,18 @@ public class GeneticAlgorithm {
         System.out.println("Best: " + this.individuals.get(0).toString() + " Fitness: " + this.individuals.get(0).getFitness());
     }
 
-    public void runAlgorithm(){
+    public void evaluateGeneration(){
         this.evaluateIndividuals();
+    }
+
+    public void runAlgorithm(){
         this.selectIndividuals();
         this.crossOverIndividuals();
         this.mutateIndividuals();
     }
 
 
-
-
+    public List<Individual> getIndividuals() {
+        return individuals;
+    }
 }

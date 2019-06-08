@@ -2,15 +2,15 @@ package network.model;
 
 import java.io.Serializable;
 
-public class ComparatorSet implements Serializable {
+public class Comparator implements Serializable {
 
     private int X;
     private int Y;
 
 
-    public void setComparator(ComparatorSet comparatorSet){
-        this.X = comparatorSet.getX();
-        this.Y = comparatorSet.getY();
+    public void setComparator(Comparator comparator){
+        this.X = comparator.getX();
+        this.Y = comparator.getY();
     }
     public int getY() {
         return Y;
@@ -28,13 +28,13 @@ public class ComparatorSet implements Serializable {
         X = x;
     }
 
-    public ComparatorSet(){
+    public Comparator(){
 
         this.setX(0);
         this.setY(0);
     }
 
-    public boolean Equals(ComparatorSet x){
+    public boolean Equals(Comparator x){
         if(this.getX() == x.getX() && this.getY() == x.getY()){
             return true;
         }

@@ -1,6 +1,6 @@
 package infrastructure;
 
-import network.model.ComparatorSet;
+import network.model.Comparator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -43,11 +43,11 @@ public class Helper {
         return aux;
     }
 
-    public static boolean checkAllComparatorsAreDifferent(List<ComparatorSet> comparatorSetList, Integer j){
-        for(int i=0 ;i<comparatorSetList.size();i++){
+    public static boolean checkAllComparatorsAreDifferent(List<Comparator> comparatorList, Integer j){
+        for(int i = 0; i< comparatorList.size(); i++){
             if(j != i)
-                    if(comparatorSetList.get(i).getY() == comparatorSetList.get(j).getY()){
-                        if(comparatorSetList.get(i).getX() == comparatorSetList.get(j).getX()){
+                    if(comparatorList.get(i).getY() == comparatorList.get(j).getY()){
+                        if(comparatorList.get(i).getX() == comparatorList.get(j).getX()){
                             return false;
                         }
                     }

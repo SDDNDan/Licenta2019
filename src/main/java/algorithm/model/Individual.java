@@ -23,7 +23,7 @@ public class Individual implements Serializable {
 
     @Override
     public String toString() {
-        return this.sortingNetwork.getComparatorSets().toString();
+        return this.sortingNetwork.getComparators().toString();
     }
 
     public void setSortingNetwork(SortingNetwork sortingNetwork) {

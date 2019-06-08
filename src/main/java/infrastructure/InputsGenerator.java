@@ -1,7 +1,5 @@
 package infrastructure;
 
-import network.model.ComparatorSet;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
