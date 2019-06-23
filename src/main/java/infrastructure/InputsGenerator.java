@@ -22,12 +22,6 @@ public class InputsGenerator implements Serializable {
             List<String> binaryArrayNumber = Arrays.asList(binaryNumberGenerated.split(""));
             listOfBinaryNumbers.add(binaryArrayNumber);
         }
-        List<List<String>> out = new ArrayList<List<String>>();
-        List<String> outList = new ArrayList<String>();
-        outList.add("20");
-        outList.add("15");
-        outList.add("10");
-        out.add(outList);
         return listOfBinaryNumbers;
     }
 

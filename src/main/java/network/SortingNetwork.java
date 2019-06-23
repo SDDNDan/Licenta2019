@@ -89,7 +89,6 @@ public class SortingNetwork implements Serializable {
                 inputs.set(comparator.getY(), aux);
             }
         }}catch(Exception e){
-
             System.out.println(e);
         }
 
@@ -104,7 +103,7 @@ public class SortingNetwork implements Serializable {
 
         for(List<String> input : inputsPossibility){
 
-            List<Integer> inputAux = new ArrayList<Integer>();
+            List<Integer> inputAux = new ArrayList<>();
             for(String i : input){
                 inputAux.add(Integer.valueOf(i));
             }

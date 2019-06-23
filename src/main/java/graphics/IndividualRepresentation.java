@@ -2,15 +2,17 @@ package graphics;
 
 import algorithm.model.Individual;
 import graphics.helper.LineCoordinates;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class IndividualRepresentation {
+public class IndividualRepresentation {
 
     private double circleRadius = 5;
     private double lineCoordinatesDifference = 40;
@@ -27,9 +29,9 @@ class IndividualRepresentation {
     private LineCoordinates originalLineCoordinates;
     private Label individualLabel;
     private Label individualFitness;
+    private Button individualShowButton;
 
     private int individualNumber;
-
 
     IndividualRepresentation(Individual individual, LineCoordinates lineCoordinates, int individualNumber){
         this.individual = individual;
@@ -43,9 +45,20 @@ class IndividualRepresentation {
         this.individualNumber = individualNumber;
         this.individualLabel = this.createIndividualLabel();
         this.individualFitness = this.createIndividualFitness();
+        this.individualShowButton = this.createShowButton();
 
         this.createLinesAndCircles();
         this.createComparators();
+    }
+
+    private Button createShowButton() {
+        Button button = new Button();
+        button.setLayoutX(this.individualLabel.getLayoutX() - 20);
+        button.setLayoutY(this.individualLabel.getLayoutY() - 50);
+        button.setText("Show");
+        button.setOnAction(event -> new IndividualGraphics(this.individual, this.individualNumber).start(new Stage()));
+
+        return button;
     }
 
     private void createLinesAndCircles(){
@@ -157,31 +170,34 @@ class IndividualRepresentation {
         return new Circle(this.lineCoordinates.getEndX(), this.lineCoordinates.getStartY(),circleRadius);
     }
 
-    List<Line> getWires() {
+    public List<Line> getWires() {
         return wires;
     }
 
-    Label getIndividualLabel() {
+    public Label getIndividualLabel() {
         return individualLabel;
     }
 
-    List<Circle> getCircles() {
+    public List<Circle> getCircles() {
         return circles;
     }
 
-    List<Circle> getComparatorsCircles() {
+    public List<Circle> getComparatorsCircles() {
         return comparatorsCircles;
     }
 
-    List<Line> getComparatorsLines() {
+    public List<Line> getComparatorsLines() {
         return comparatorsLines;
     }
 
-    Label getIndividualFitness() {
+    public Label getIndividualFitness() {
         return individualFitness;
     }
 
-    List<Label> getWireElements() {
-        return wireElements;
-    }
+    public List<Label> getWireElements() { return wireElements; }
+
+    public Button getIndividualShowButton() { return individualShowButton; }
+
+    public Individual getIndividual() { return individual; }
+
 }

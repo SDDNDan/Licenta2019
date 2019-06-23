@@ -26,7 +26,7 @@ public class GeneticAlgorithmGraphics extends Application {
 
     public GeneticAlgorithmGraphics(){
         this.lineCoordinates = new LineCoordinates(50,100,250,100);
-        this.geneticAlgorithm  = new GeneticAlgorithm(10,7,15);
+        this.geneticAlgorithm  = new GeneticAlgorithm(20,4,4);
         this.group = new Group();
         this.scrollPane = new ScrollPane();
         scrollPane.setContent(this.group);
@@ -41,7 +41,7 @@ public class GeneticAlgorithmGraphics extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        for(int i = 0; i< 10; i++){
+        for(int i = 0; i< 50; i++){
             this.geneticAlgorithm.evaluateGeneration();
             this.generateGeneration();
             this.geneticAlgorithm.runAlgorithm();
@@ -55,7 +55,7 @@ public class GeneticAlgorithmGraphics extends Application {
 
         this.group.getChildren().add(this.createGenerationTitle());
 
-        for(int i=0; i< this.geneticAlgorithm.getIndividuals().size(); i++){
+        for(int i=0; i< 3; i++){
             IndividualRepresentation individualRepresentation = new IndividualRepresentation(this.geneticAlgorithm.getIndividuals().get(i), this.lineCoordinates, i);
             this.addIndividualToGroup(this.group, individualRepresentation);
             this.updateLineCoordinatesForNewIndividual(this.lineCoordinates,this.geneticAlgorithm.getIndividuals().get(i).getSortingNetwork().getNumberOfInputs());
@@ -87,13 +87,7 @@ public class GeneticAlgorithmGraphics extends Application {
     }
 
     public void addIndividualToGroup(Group group, IndividualRepresentation individualRepresentation){
-        group.getChildren().addAll(individualRepresentation.getWires());
-        group.getChildren().addAll(individualRepresentation.getCircles());
-        group.getChildren().add(individualRepresentation.getIndividualLabel());
-        group.getChildren().addAll(individualRepresentation.getComparatorsCircles());
-        group.getChildren().addAll(individualRepresentation.getComparatorsLines());
-        group.getChildren().add(individualRepresentation.getIndividualFitness());
-        group.getChildren().addAll(individualRepresentation.getWireElements());
+        IndividualGraphics.addIndividualToGroup(group, individualRepresentation);
     }
 
     private void resetLineCoordinates(){
