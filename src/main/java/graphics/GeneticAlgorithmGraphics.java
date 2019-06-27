@@ -41,7 +41,7 @@ public class GeneticAlgorithmGraphics extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        for(int i = 0; i< 50; i++){
+        for(int i = 0; i< 5; i++){
             this.geneticAlgorithm.evaluateGeneration();
             this.generateGeneration();
             this.geneticAlgorithm.runAlgorithm();
